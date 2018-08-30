@@ -1,9 +1,8 @@
 import unittest
 from src.manufacturer import Manufacturer
-
 # NOTE: Test methods need to start with "test_" or else they won't be recognized.
-
 # __init__(name, code, rules)
+
 
 class TestTransaction(unittest.TestCase):
 
@@ -32,7 +31,6 @@ class TestTransaction(unittest.TestCase):
         self.assertEqual(self.a.rules, ["First digit is a 1 for cereals and 2 for granola bars",
                                         "Second digit depends on which state it was produced in",
                                         "Third digit is 3 for products conceived this decade, 2 for the last decade"])
-
 
     def test_remove_rule(self):
         with self.assertRaises(ValueError):

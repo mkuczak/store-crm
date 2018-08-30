@@ -8,7 +8,8 @@ class TestTransaction(unittest.TestCase):
 
     def setUp(self):
         self.a = Manufacturer("General Mills", "16000", ["First digit is a 1 for cereals and 2 for granola bars",
-                                                         "Third digit is 3 for products conceived this decade, 2 for the last decade"])
+                                                         "Third digit is 3 for products conceived this decade, "
+                                                         "2 for the last decade"])
         self.b = Manufacturer("Skippy", "37600", [])
         self.c = Manufacturer("Smucker's", "51500", ["First and second digits reserved for product lines."])
         self.d = Manufacturer("Cheetos", "28400", ["First, second, and third digits represents the variety",

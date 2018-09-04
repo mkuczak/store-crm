@@ -1,5 +1,5 @@
 import unittest
-from transaction import Transaction
+from src.transaction import Transaction
 # NOTE: Test methods need to start with "test_" or else they won't be recognized.
 # __init__(id, cart=None, payment_method=None, card_number=None, rewards_id=None)
 
@@ -31,9 +31,6 @@ class TestTransaction(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.i.remove_from_cart('051500006771')
 
-    def test_receipt(self):
-        pass
-        # MAke sure to come back for this one
 
 if __name__ == '__main__':
     unittest.main

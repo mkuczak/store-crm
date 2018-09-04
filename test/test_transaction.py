@@ -8,7 +8,7 @@ class TestTransaction(unittest.TestCase):
 
     def setUp(self):
         self.g = Transaction(1, ['016000275270', '051500006771', '051500006771', '051500006771'], 'credit',
-                             '1000-1000-1000-1000', 0)
+                             '1000100010001000', 0)
         self.h = Transaction(['051500006771'], 'cash', 2)
         self.i = Transaction(3)
 
@@ -30,6 +30,28 @@ class TestTransaction(unittest.TestCase):
             self.h.remove_from_cart('016000275270')
         with self.assertRaises(ValueError):
             self.i.remove_from_cart('051500006771')
+
+    def test_set_payment_method(self):
+        with self.assertRaises(ValueError):
+            self.i.set_payment_method("INVALID STRING")
+        self.i.set_payment_method("credit")
+        self.assertEqual(self.i.payment_method, "credit")
+        self.i.set_payment_method("debit")
+        self.assertEqual(self.i.payment_method, "debit")
+        self.g.set_payment_method("credit")
+        self.assertEqual(self.g.payment_method, "cash")
+        self.h.set_payment_method("check")
+        self.assertEqual(self.h.payment_method, "check")
+
+    def test_set_card_number(self):
+        with self.assertRaises(ValueError):
+            self.i.set_card_number("0000")
+        with self.assertRaises(ValueError):
+            self.i.set_card_number("123456781234567K")
+        self.g.set_card_number("1234567812345678")
+        self.assertEqual(self.g.card_number, "1234567812345678")
+        with self.assertRaises(AssertionError):
+            self.h.set_card_number("1234567812345678")
 
 
 if __name__ == '__main__':

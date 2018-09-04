@@ -1,10 +1,10 @@
 class Item:
 
     def __init__(self, manufacturer, product, price, multiplier, quantity, barcode=None):
-        if barcode != None:
-            self.barcode = barcode
-        else:
+        if barcode is None:
             self.barcode = ""
+        else:
+            self.barcode = barcode
         self.manufacturer = manufacturer
         self.product = product
         self.price = price

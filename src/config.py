@@ -8,6 +8,8 @@ global city
 city = "Istanbul"
 global address
 address = "619 N. Clark Rd."
+global can_resell
+can_resell = False
 
 
 def date_time(exp=None):

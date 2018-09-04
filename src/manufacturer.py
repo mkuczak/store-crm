@@ -1,9 +1,9 @@
 class Manufacturer:
 
-    def __init__(self, name, code, rules = None):
+    def __init__(self, name, code, rules=None):
         self.name = name
         self.code = code
-        if rules == None:
+        if rules is None:
             self.rules = []
         else:
             self.rules = rules
@@ -23,7 +23,7 @@ class Manufacturer:
 
     # If no number given, places rule at the end.  Otherwise, shifts rules to the right.
     def add_rule(self, rule, number=None):
-        if number == None:
+        if number is None:
             self.rules.append(rule)
         else:
             self.rules.insert(number-1, rule)

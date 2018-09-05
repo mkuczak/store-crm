@@ -7,10 +7,10 @@ from src.transaction import Transaction
 class TestTransaction(unittest.TestCase):
 
     def setUp(self):
-        self.g = Transaction(1, ['016000275270', '051500006771', '051500006771', '051500006771'], 'credit',
+        self.g = Transaction(['016000275270', '051500006771', '051500006771', '051500006771'], 'credit',
                              '1000100010001000', 0)
         self.h = Transaction(['051500006771'], 'cash', 2)
-        self.i = Transaction(3)
+        self.i = Transaction()
 
     # itemDB will have a method that tests barcode validity, so we do not need to do that here
     def test_add_to_cart(self):
@@ -19,17 +19,19 @@ class TestTransaction(unittest.TestCase):
         self.i.add_to_cart('051500006771')
         self.assertEqual(self.i.cart, ['051500006771'])
 
-    # itemDB will have a method that test for barcode validity, but remove_from_cart still need to check whether the
-    # barcode was present in the cart before removal
     def test_remove_from_cart(self):
-        self.g.remove_from_cart('051500006771')
+        self.g.remove_from_cart('2')
         self.assertEqual(self.g.cart, ['016000275270', '051500006771', '051500006771'])
-        self.g.remove_from_cart('016000275270')
+        self.g.remove_from_cart('1')
         self.assertEqual(self.g.cart, ['051500006771', '051500006771'])
+        with self.assertRaises(IndexError):
+            self.h.remove_from_cart('2')
+        with self.assertRaises(IndexError):
+            self.i.remove_from_cart('1')
         with self.assertRaises(ValueError):
-            self.h.remove_from_cart('016000275270')
+            self.g.remove_from_cart('0')
         with self.assertRaises(ValueError):
-            self.i.remove_from_cart('051500006771')
+            self.g.remove_from_cart('5')
 
     def test_set_payment_method(self):
         with self.assertRaises(ValueError):

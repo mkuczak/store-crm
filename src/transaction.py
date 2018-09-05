@@ -22,7 +22,7 @@ class Transaction:
     def add_to_cart(self, barcode):
         pass
 
-    def remove_from_cart(self, index):
+    def remove_from_cart(self, number):
         pass
 
     def set_payment_method(self, payment_method):

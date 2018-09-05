@@ -30,7 +30,7 @@ class TestTransaction(unittest.TestCase):
             self.i.remove_from_cart('1')
         with self.assertRaises(ValueError):
             self.g.remove_from_cart('0')
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             self.g.remove_from_cart('5')
 
     def test_set_payment_method(self):
@@ -40,7 +40,7 @@ class TestTransaction(unittest.TestCase):
         self.assertEqual(self.i.payment_method, "credit")
         self.i.set_payment_method("debit")
         self.assertEqual(self.i.payment_method, "debit")
-        self.g.set_payment_method("credit")
+        self.g.set_payment_method("cash")
         self.assertEqual(self.g.payment_method, "cash")
         self.h.set_payment_method("check")
         self.assertEqual(self.h.payment_method, "check")

@@ -1,4 +1,3 @@
-
 class Transaction:
 
     def __init__(self, cart=None, payment_method=None, card_number=None, rewards_id=None):

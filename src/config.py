@@ -1,4 +1,5 @@
 import datetime
+import sqlite3
 
 global store_name
 store_name = "X-Mart"
@@ -10,6 +11,13 @@ global address
 address = "619 N. Clark Rd."
 global can_resell
 can_resell = False
+
+
+global connector
+connector = sqlite3.connect('location.db')
+connector.text_factory = str
+global cursor
+cursor = connector.cursor()
 
 
 def date_time(exp=None):

@@ -22,36 +22,34 @@ class TestTransaction(unittest.TestCase):
     def test_add_to_items(self):
 
         with self.assertRaises(ValueError):
-            self.m.add_to_items('016000275270', self.h)
+            self.m.add_to_items('016000275270', self.h.cart)
         with self.assertRaises(ValueError):
-            self.m.add_to_items('111111111111', self.h)
-        self.m.add_to_items('051500006771', self.h)
+            self.m.add_to_items('111111111111', self.h.cart)
+        self.m.add_to_items('051500006771', self.h.cart)
         self.assertEqual(self.m.items, ['051500006771'])
 
-        self.i.add_to_items('051500006771', self.g)
+        self.i.add_to_items('051500006771', self.g.cart)
         self.assertEqual(self.i.items, ['051500006771', '051500006771'])
 
-        self.n.add_to_items('016000275270', self.g)
+        self.n.add_to_items('016000275270', self.g.cart)
         self.assertEqual(self.n.items, ['016000275270'])
         with self.assertRaises(ValueError):
-            self.n.add_to_items('016000275270', self.g)
+            self.n.add_to_items('016000275270', self.g.cart)
         self.assertEqual(self.n.items, ['016000275270'])
-        self.n.add_to_items('016000275270', self.g)
-        self.assertEqual(self.n.items, ['016000275270'])
-        self.n.add_to_items('051500006771', self.g)
+        self.n.add_to_items('051500006771', self.g.cart)
         self.assertEqual(self.n.items, ['016000275270', '051500006771'])
-        self.n.add_to_items('051500006771', self.g)
+        self.n.add_to_items('051500006771', self.g.cart)
         self.assertEqual(self.n.items, ['016000275270', '051500006771', '051500006771'])
-        self.n.add_to_items('051500006771', self.g)
+        self.n.add_to_items('051500006771', self.g.cart)
         self.assertEqual(self.n.items, ['016000275270', '051500006771', '051500006771', '051500006771'])
         with self.assertRaises(ValueError):
-            self.n.add_to_items('051500006771', self.g)
+            self.n.add_to_items('051500006771', self.g.cart)
         self.assertEqual(self.n.items, self.g.cart)
 
     def test_add_all_to_items(self):
-        self.m.add_all_to_items(self.g)
+        self.m.add_all_to_items(self.g.cart)
         self.assertEqual(self.m.items, self.g.cart)
-        self.n.add_all_to_items(self.h)
+        self.n.add_all_to_items(self.h.cart)
         self.assertEqual(self.n.items, self.h.cart)
 
     def test_remove_from_items(self):
@@ -64,7 +62,7 @@ class TestTransaction(unittest.TestCase):
         with self.assertRaises(IndexError):
             self.i.remove_from_items('2')
         self.assertEqual(self.i.items, ['051500006771'])
-        self.i.remove_from_items[1]
+        self.i.remove_from_items(1)
         self.assertEqual(self.i.items, [])
         self.j.remove_from_items(1)
         self.assertEqual(self.j.items, ['016000275270'])

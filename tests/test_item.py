@@ -4,7 +4,7 @@ from src.item import Item
 # __init__(barcode, manufacturer, product, price, multiplier, quantity, barcode=None)
 
 
-class TestTransaction(unittest.TestCase):
+class TestItem(unittest.TestCase):
 
     def setUp(self):
         self.e = Item("General Mills", "Honey Nut Cheerios Cereal - 12oz", 3.99, 1.00, 90)  # 016000275270

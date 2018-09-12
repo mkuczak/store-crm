@@ -4,7 +4,7 @@ from src.manufacturer import Manufacturer
 # __init__(name, code, rules)
 
 
-class TestTransaction(unittest.TestCase):
+class TestManufacturer(unittest.TestCase):
 
     def setUp(self):
         self.a = Manufacturer("General Mills", "16000", ["First digit is a 1 for cereals and 2 for granola bars",

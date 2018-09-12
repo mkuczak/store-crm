@@ -4,7 +4,7 @@ from src.transaction import Transaction
 # NOTE: Test methods need to start with "test_" or else they won't be recognized.
 
 
-class TestTransaction(unittest.TestCase):
+class TestRefund(unittest.TestCase):
 
     def setUp(self):
 

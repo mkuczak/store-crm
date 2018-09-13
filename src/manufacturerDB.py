@@ -6,6 +6,13 @@ def add_to_db(manufacturer):
     pass
 
 
+def extract_from_db_by_name(name):
+    pass
+
+
+def extract_from_db_by_code(code):
+
+
 def remove_from_db_by_name(name):
     pass
 

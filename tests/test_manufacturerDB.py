@@ -21,6 +21,22 @@ class TestManufacturerDB(unittest.TestCase):
         self.assertEqual(table_as_list[2], ("Nutella", "09800", "This is the first rule", "This is the second rule",
                                             "This is the third and final rule"))
 
+    def test_extract_from_db_by_name(self):
+        self.assertEqual(mDB.extract_from_db_by_name("General Mills"),
+                         Manufacturer("General Mills", '16000', ['Do not pick up the phone', 'Do not let him in']))
+        self.assertEqual(mDB.extract_from_db_by_name("Smucker's"),
+                         Manufacturer("Smucker's", '51500', ['Do not be his friend',
+                                                             'You know that you will be waking up in his bed in the '
+                                                             'morning', 'If you are under him']))
+
+    def test_extract_from_db_by_code(self):
+        self.assertEqual(mDB.extract_from_db_by_code('16000'),
+                         Manufacturer("General Mills", '16000', ['Do not pick up the phone', 'Do not let him in']))
+        self.assertEqual(mDB.extract_from_db_by_code('51500'),
+                         Manufacturer("Smucker's", '51500', ['Do not be his friend',
+                                                             'You know that you will be waking up in his bed in the '
+                                                             'morning', 'If you are under him']))
+
     def test_remove_from_db_by_name(self):
         table_as_list = t_cursor.execute("SELECT * FROM Manufacturers").fetchall()
         self.assertEqual(len(table_as_list), 3)

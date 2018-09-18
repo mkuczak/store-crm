@@ -12,7 +12,7 @@ def get_next_id():
 
 def add_to_db(transaction):
     cart_string = ""
-    for i in range(1,51):
+    for i in range(1, 51):
         cart_string += ', :Cart_' + str(i)
     cursor.execute("INSERT INTO Items VALUES (:ID, :Payment_Method, :Card_Number, :Rewards_ID" + cart_string + ")",
                    {'ID': get_next_id(), 'Payment_Method': transaction.payment_method,
@@ -51,7 +51,7 @@ def get_rewards_id(tid):
 def get_cart(tid):
     cart = []
     row = cursor.execute("SELECT * FROM Transactions WHERE ID=?", tid).fetchone()
-    for i in range(4,54):
+    for i in range(4, 54):
         item = row[i]
         if item != "":
             cart.append(item)

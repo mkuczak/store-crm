@@ -19,6 +19,42 @@ connector.text_factory = str
 global cursor
 cursor = connector.cursor()
 
+cart_string = ""
+for val in range(1,50):
+    cart_string += "Cart_" + str(val) + " text,\n"
+cart_string += "Cart_50 text\n)"
+cursor.execute("""CREATE TABLE IF NOT EXISTS Transactions
+                                            (ID int,
+                                            Payment_Method text,
+                                            Card_Number text,
+                                            Rewards_ID int,
+                                            """ + cart_string)
+
+cursor.execute("""CREATE TABLE IF NOT EXISTS Refunds
+                                            (ID int,
+                                            Reason text,
+                                            Total real,
+                                            """ + cart_string.replace("Cart", "Item"))
+
+cursor.execute("""CREATE TABLE IF NOT EXISTS Items
+                                            (Barcode text,
+                                            Manufacturer text,
+                                            Product text,
+                                            Price real,
+                                            Multiplier real,
+                                            Quantity int
+                                            )""")
+
+cursor.execute("""CREATE TABLE IF NOT EXISTS Manufacturers
+                                            (Name text,
+                                            Code text,
+                                            Rule_1 text,
+                                            Rule_2 text,
+                                            Rule_3 text,
+                                            Rule_4 text,
+                                            Rule_5 text
+                                            )""")
+
 
 def date_time(exp=None):
     if exp is None:

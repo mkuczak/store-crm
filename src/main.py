@@ -34,22 +34,23 @@ def main():
     itemDB.set_price('011111222220', 3)
     print("This should display 3.00: " + str(itemDB.get_price('011111222220')))
 
-    # transactionDB.remove_from_db(1)
-    # x = transactionDB.get_rewards_id(1)
-    # if x is None:
-    #     print("Removal of transaction from DB SUCCESS.")
-    # else:
-    #     print("Removal of transaction from DB FAILURE.")
-    # x = transactionDB.get_cart(1)
-    # if x is None:
-    #     print("Removal of transaction from DB SUCCESS.")
-    # else:
-    #     print("Removal of transaction from DB FAILURE.")
-    # try:
-    #     transactionDB.remove_from_db(1)
-    #     print("This message should have popped up if remove_from_db doesn't care about invalid tid")
-    # finally:
-    #     print("If no message about remove_from_db exists above this, invalid tids don't throw errors.")
+    itemDB.remove_from_db('022222111110')
+    if itemDB.get_name('022222111110') is None:
+        print("Item deletion SUCCESS")
+    else:
+        print("Item deletion FAILURE")
+
+    try:
+        itemDB.set_multiplier('022222111110', 0.10)
+        print("Item deletion FAILURE")
+    except ValueError:
+        print("Item deletion SUCCESS")
+
+    if itemDB.get_name('000000222220') is not None:
+        print("Invalid barcode check FAILURE.")
+    else:
+        print("Invalid barcode check SUCCESS.")
+    print("This should display 011111222220: " + itemDB.extract_from_db('011111222220').barcode)
 
 
 def numbered_prompt(heading, func, *choices):

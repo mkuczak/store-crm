@@ -10,12 +10,13 @@ def add_to_db(item):
 
 
 def add_quantity(barcode, number=1):
-    # Check how many changes were made?  Idk, this should notify the user if quantity is not added.
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)) is None:
+        raise ValueError
     cursor.execute("UPDATE Items SET Quantity = Quantity + ? WHERE Barcode = ?", (str(number), barcode,))
     connector.commit()
 
 
-def subtract_quantity(barcode, number=1):  # ROW IS EMPTY SO FOR LOOP NEVER HAPPENS
+def subtract_quantity(barcode, number=1):
     try:
         quantity = cursor.execute("SELECT Quantity FROM Items WHERE Barcode = ?", (barcode,)).fetchone()[0]
     except TypeError:
@@ -57,35 +58,49 @@ def get_quantity(barcode):
 
 
 def set_manufacturer(barcode, manufacturer):
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
     cursor.execute("UPDATE Items SET Manufacturer = ? WHERE Barcode = ?", (manufacturer, barcode,))
     connector.commit()
 
 
 def set_product(barcode, product):
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
     cursor.execute("UPDATE Items SET Product = ? WHERE Barcode = ?", (product, barcode,))
     connector.commit()
 
 
 def set_quantity(barcode, number):
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
     cursor.execute("UPDATE Items SET Quantity = ? WHERE Barcode = ?", (str(number), barcode,))
     connector.commit()
 
 
 def set_price(barcode, number):
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
     cursor.execute("UPDATE Items SET Price = ? WHERE Barcode = ?", (str(number), barcode,))
     connector.commit()
 
 
 def set_multiplier(barcode, number):
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
     cursor.execute("UPDATE Items SET Price = ? WHERE Barcode = ?", (str(number), barcode,))
     connector.commit()
 
 
 def extract_from_db(barcode):
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
     row = cursor.execute("SELECT * FROM Items WHERE Barcode=?", (barcode,)).fetchone()
     return Item(row[1], row[2], row[3], row[4], row[5], row[0])
 
 
 def remove_from_db(barcode):
-    cursor.execute("DELETE * FROM Items WHERE Barcode=?", (barcode,))
+    if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
+        raise ValueError
+    cursor.execute("DELETE FROM Items WHERE Barcode=?", (barcode,))
     connector.commit()

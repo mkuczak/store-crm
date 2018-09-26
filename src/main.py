@@ -12,31 +12,44 @@ import src.config
 
 
 def main():
-    src.config.cursor.execute("DELETE FROM Transactions")
-    transactionDB.add_to_db(Transaction(['000011112222', '000022221111'], "credit", "1111111111111111", 3))
-    transactionDB.add_to_db(Transaction(['000011112222', '000022221111'], "credit", "1111111111111111", 3))
-    print("This should display 1111111111111111: " + transactionDB.get_card_number(1))
-    print("This should display ['000011112222', '000022221111'] below: ")
-    print(transactionDB.get_cart(1))
-    print("This should display credit: " + transactionDB.get_payment_method(1))
-    print("This should display 3: " + str(transactionDB.get_rewards_id(1)))
-    print("This should display 1111111111111111: " + transactionDB.extract_from_db(1).card_number)
-    transactionDB.remove_from_db(1)
-    x = transactionDB.get_rewards_id(1)
-    if x is None:
-        print("Removal of transaction from DB SUCCESS.")
-    else:
-        print("Removal of transaction from DB FAILURE.")
-    x = transactionDB.get_cart(1)
-    if x is None:
-        print("Removal of transaction from DB SUCCESS.")
-    else:
-        print("Removal of transaction from DB FAILURE.")
-    try:
-        transactionDB.remove_from_db(1)
-        print("This message should have popped up if remove_from_db doesn't care about invalid tid")
-    finally:
-        print("If no message about remove_from_db exists above this, invalid tids don't throw errors.")
+    src.config.cursor.execute("DELETE FROM Items")
+    itemDB.add_to_db(Item("Manufacturer0", "Product0", 1.00, 0.85, 4, '022222111110'))
+    itemDB.add_to_db(Item("Manufacturer1", "Product1", 0.89, 1.00, 9, '011111222220'))
+    print("This should display 1.00: " + str(itemDB.get_price('022222111110')))
+    print("This should display 0.85: " + str(itemDB.get_price('022222111110', True)))
+    print("This should display 0.89: " + str(itemDB.get_price('011111222220', True)))
+    print("This should display Manufacturer0 Product0: " + itemDB.get_name('022222111110'))
+    print("This should display Product1: " + itemDB.get_name('011111222220', False))
+    print("This should display 4: " + str(itemDB.get_quantity('022222111110')))
+    itemDB.add_quantity('022222111110', 2)
+    print("This should display 6: " + str(itemDB.get_quantity('022222111110')))
+    print("This should display 9: " + str(itemDB.get_quantity('011111222220')))
+    itemDB.subtract_quantity('011111222220', 7)
+    print("This should display 2: " + str(itemDB.get_quantity('011111222220')))
+    itemDB.set_product('022222111110', 'NewProduct0')
+    print("This should display NewProduct0: " + str(itemDB.get_name('022222111110', False)))
+    itemDB.set_price('022222111110', 2.00)
+    print("This should display 2.00: " + str(itemDB.get_price('022222111110')))
+    print("This should display 1.70: " + str(itemDB.get_price('022222111110', True)))
+    itemDB.set_price('011111222220', 3)
+    print("This should display 3.00: " + str(itemDB.get_price('011111222220')))
+
+    # transactionDB.remove_from_db(1)
+    # x = transactionDB.get_rewards_id(1)
+    # if x is None:
+    #     print("Removal of transaction from DB SUCCESS.")
+    # else:
+    #     print("Removal of transaction from DB FAILURE.")
+    # x = transactionDB.get_cart(1)
+    # if x is None:
+    #     print("Removal of transaction from DB SUCCESS.")
+    # else:
+    #     print("Removal of transaction from DB FAILURE.")
+    # try:
+    #     transactionDB.remove_from_db(1)
+    #     print("This message should have popped up if remove_from_db doesn't care about invalid tid")
+    # finally:
+    #     print("If no message about remove_from_db exists above this, invalid tids don't throw errors.")
 
 
 def numbered_prompt(heading, func, *choices):

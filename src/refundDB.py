@@ -33,25 +33,37 @@ def add_to_db(refund):
                     'Item_43': refund.item[42], 'Item_44': refund.item[43], 'Item_45': refund.item[44],
                     'Item_46': refund.item[45], 'Item_47': refund.item[46], 'Item_48': refund.item[47],
                     'Item_49': refund.item[48], 'Item_50': refund.item[49]})
+    connector.commit()
 
 
 def get_reason(tid):
-    return cursor.execute("SELECT Reason FROM Refunds WHERE ID=?", tid).fetchone()[0]
+    try:
+        return cursor.execute("SELECT Reason FROM Refunds WHERE ID=?", str(tid)).fetchone()[0]
+    except TypeError:
+        return None
 
 
 def get_items(tid):
     items = []
-    row = cursor.execute("SELECT * FROM Refunds WHERE ID=?", tid).fetchone()
+    row = cursor.execute("SELECT * FROM Refunds WHERE ID=?", str(tid)).fetchone()
+    if row is None:
+        return None
     for i in range(4, 54):
         item = row[i]
         if item != "":
             items.append(item)
+        else:
+            break
     return items
 
 
 def extract_from_db(tid):
-    return Refund(tid, get_items(tid), get_reason())
+    row = cursor.execute("SELECT * FROM Refunds WHERE ID = ?", str(tid)).fetchone()
+    if row is None:
+        return None
+    return Refund(tid, get_items(tid), get_reason(tid))
 
 
 def remove_from_db(tid):
-    cursor.execute("DELETE * FROM Refunds WHERE ID=?", tid)
+    cursor.execute("DELETE * FROM Refunds WHERE ID = ?", tid)
+    connector.commit()

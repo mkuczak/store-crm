@@ -18,42 +18,62 @@ def add_to_db(manufacturer):
 
 
 def extract_from_db_by_name(name):
-    row = cursor.execute("SELECT * FROM Manufacturers WHERE Name='?'", name).fetchone()
+    row = cursor.execute("SELECT * FROM Manufacturers WHERE Name = ?", name).fetchone()
     return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
 
 
 def extract_from_db_by_code(code):
-    row = cursor.execute("SELECT * FROM Manufacturers WHERE Code='?'", code).fetchone()
+    row = cursor.execute("SELECT * FROM Manufacturers WHERE Code = ?", code).fetchone()
     return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
 
 
 def remove_from_db_by_name(name):
-    cursor.execute("DELETE * FROM Manufacturers WHERE Name='?'", name)
+    cursor.execute("DELETE * FROM Manufacturers WHERE Name = ?", name)
+    connector.commit()
 
 
 def remove_from_db_by_code(code):
-    cursor.execute("DELETE * FROM Manufacturers WHERE Code='?'", code)
+    cursor.execute("DELETE * FROM Manufacturers WHERE Code = ?", code)
+    connector.commit()
 
 
 def get_name_from_code(code):
-    return cursor.execute("SELECT Name FROM Manufacturers WHERE Code='?'", code).fetchone()[0]
+    try:
+        return cursor.execute("SELECT Name FROM Manufacturers WHERE Code = ?", code).fetchone()[0]
+    except TypeError:
+        return None
 
 
 def get_code_from_name(name):
-    return cursor.execute("SELECT Code FROM Manufacturers WHERE Name='?'", name).fetchone()[1]
+    try:
+        return cursor.execute("SELECT Code FROM Manufacturers WHERE Name = ?", name).fetchone()[0]
+    except TypeError:
+        return None
 
 
 def get_rules_from_code(code):
     _rules = []
-    cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Code='?'", code)
+    row = cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Code = ?", code)
+    if row is None:
+        return None
     for i in range(2, 7):
-        _rules.append(cursor.fetchone()[i])
+        _rule = cursor.fetchone()[i]
+        if _rule == "":
+            break
+        else:
+            _rules.append(_rule)
     return _rules
 
 
 def get_rules_from_name(name):
     _rules = []
-    cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Name='?'", name)
+    row = cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Name = ?", name)
+    if row is None:
+        return None
     for i in range(2, 7):
-        _rules.append(cursor.fetchone()[i])
+        _rule = cursor.fetchone()[i]
+        if _rule == "":
+            break
+        else:
+            _rules.append(_rule)
     return _rules

@@ -14,7 +14,9 @@ import src.config
 def main():
     pass
 
-def numbered_prompt(heading, func, *choices):
+
+# "Multiple Choice Prompt: Options are listed and the user only needs to select an int from the list.
+def mc_prompt(heading, func, *choices):
     while True:
         print(heading)
         n = 1
@@ -28,6 +30,17 @@ def numbered_prompt(heading, func, *choices):
             print("ValueError: Try again.\n")
         except IndexError:
             print("IndexError: Try again.\n")
+
+
+# Free Form Prompt: User must input something (such as a barcode) with the heading being the only guidance.
+def ff_prompt(heading, func):
+    while True:
+        print(heading)
+        try:
+            func(input("Input barcode: "))
+            break
+        except ValueError:
+            print("ValueError: Try again.\n")
         except AssertionError:
             print("AssertionError: Try again.\n")
 

@@ -13,14 +13,27 @@ import src.config
 
 def main():
     user_input = navigate_menu("Main Menu", "Transactions", "Refunds", "Items", "Manufacturers")
+    sep()
     if user_input == 1:  # Transactions
         user_input = navigate_menu("Transactions", "New", "Search", "View All")
+        sep()
         if user_input == 0:  # Main Menu
             return
         elif user_input == 1:  # Transactions -> New
             pass
         elif user_input == 2:  # Transactions -> Search
-            pass
+            extraction = ff_prompt("Transaction -> Search", "ID", transactionDB.extract_from_db)
+            sep()
+            print("ID: " + extraction[1])
+            print("Payment Method: " + extraction[0].payment_method)
+            print("Card Number: " + extraction[0].card_number)
+            print("Rewards ID: " + str(extraction[0].rewards_id))
+            print("Cart: ", end="")
+            for barcode in extraction[0].cart:
+                print(barcode + "\n      ", end="")
+                # print(barcode + " " + itemDB.get_name(barcode, False) + "\n      ", end="")
+            sep()
+            return
         elif user_input == 3:  # Transactions -> View All
             pass
     elif user_input == 2:  # Refunds
@@ -92,16 +105,20 @@ def mc_prompt(heading, func, *choices):
 
 
 # Free Form Prompt: User must input something (such as a barcode) with the heading being the only guidance.
-def ff_prompt(heading, func):
+def ff_prompt(heading, keyword, func):
     while True:
         print(heading)
         try:
-            func(input("Input barcode: "))
-            break
+            user_input = input("Input " + keyword + ": ")
+            return func(user_input), user_input
         except ValueError:
             print("ValueError: Try again.\n")
         except AssertionError:
             print("AssertionError: Try again.\n")
+
+
+def sep():
+    print("------------------------------")
 
 
 while True:

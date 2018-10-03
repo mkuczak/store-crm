@@ -43,7 +43,15 @@ def main():
         elif user_input == 1:  # Refunds -> New
             pass
         elif user_input == 2:  # Refunds -> Search
-            pass
+            extraction = ff_prompt("Refunds -> Search", "ID", refundDB.extract_from_db)
+            sep()
+            print("ID: " + extraction.t_id)
+            print("Reason: " + extraction.reason)
+            print("Items: ", end="")
+            for barcode in extraction.items:
+                print(barcode + "\n      ", end="")
+            sep()
+            return
         elif user_input == 3:  # Refunds -> View All
             pass
     elif user_input == 3:  # Items
@@ -53,7 +61,16 @@ def main():
         elif user_input == 1:  # Items -> New
             pass
         elif user_input == 2:  # Items -> Search
-            pass
+            extraction = ff_prompt("Items -> Search", "Barcode", itemDB.extract_from_db)
+            sep()
+            print("Barcode: " + extraction.barcode)
+            print("Manufacturer: " + extraction.manufacturer)
+            print("Product: " + extraction.product)
+            print("Price: " + extraction.price)
+            print("Multiplier: " + extraction.multiplier)
+            print("Quantity: " + extraction.quantity)
+            sep()
+            return
         elif user_input == 3:  # Items -> View All
             pass
     elif user_input == 4:  # Manufacturers
@@ -63,7 +80,15 @@ def main():
         elif user_input == 1:  # Manufacturers -> New
             pass
         elif user_input == 2:  # Manufacturers -> Search
-            pass
+            extraction = ff_prompt("Manufacturers -> Search", "Name", manufacturerDB.extract_from_db_by_name)
+            sep()
+            print("Name: " + extraction.name)
+            print("Code: " + extraction.code)
+            print("Items: ", end="")
+            for rule in extraction.rules:
+                print(rule + "\n      ", end="")
+            sep()
+            return
         elif user_input == 3:  # Manufacturers -> View All
             pass
     print("Invalid input.  Returning to the main menu.")

@@ -78,7 +78,8 @@ def get_cart(tid):
 def extract_from_db(tid):
     if cursor.execute("SELECT * FROM Transactions WHERE ID = ?", str(tid)).fetchone() is None:
         raise ValueError
-    return Transaction(get_cart(tid), get_payment_method(tid), get_card_number(tid), get_rewards_id(tid))
+    else:
+        return Transaction(get_cart(tid), get_payment_method(tid), get_card_number(tid), get_rewards_id(tid))
 
 
 def remove_from_db(tid):

@@ -19,12 +19,18 @@ def add_to_db(manufacturer):
 
 def extract_from_db_by_name(name):
     row = cursor.execute("SELECT * FROM Manufacturers WHERE Name = ?", name).fetchone()
-    return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
+    if row is None:
+        raise ValueError
+    else:
+        return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
 
 
 def extract_from_db_by_code(code):
     row = cursor.execute("SELECT * FROM Manufacturers WHERE Code = ?", code).fetchone()
-    return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
+    if row is None:
+        raise ValueError
+    else:
+        return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
 
 
 def remove_from_db_by_name(name):

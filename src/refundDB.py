@@ -58,10 +58,10 @@ def get_items(tid):
 
 
 def extract_from_db(tid):
-    row = cursor.execute("SELECT * FROM Refunds WHERE ID = ?", str(tid)).fetchone()
-    if row is None:
-        return None
-    return Refund(tid, get_items(tid), get_reason(tid))
+    if cursor.execute("SELECT * FROM Refunds WHERE ID = ?", str(tid)).fetchone() is None:
+        raise ValueError
+    else:
+        return Refund(tid, get_items(tid), get_reason(tid))
 
 
 def remove_from_db(tid):

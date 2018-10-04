@@ -6,7 +6,7 @@ from src.manufacturer import Manufacturer
 import src.transactionDB as transactionDB
 import src.refundDB as refundDB
 import src.itemDB as itemDB
-import src.manufacturer as manufacturerDB
+import src.manufacturerDB as manufacturerDB
 
 import src.config
 
@@ -22,16 +22,9 @@ def main():
         elif user_input == 1:  # Transactions -> New
             pass
         elif user_input == 2:  # Transactions -> Search
-            extraction = ff_prompt("Transaction -> Search", "ID", transactionDB.extract_from_db)
+            t_extraction = ff_prompt("Transaction -> Search", "ID", transactionDB.extract_from_db)
             sep()
-            print("ID: " + extraction[1])
-            print("Payment Method: " + extraction[0].payment_method)
-            print("Card Number: " + extraction[0].card_number)
-            print("Rewards ID: " + str(extraction[0].rewards_id))
-            print("Cart: ", end="")
-            for barcode in extraction[0].cart:
-                print(barcode + "\n      ", end="")
-                # print(barcode + " " + itemDB.get_name(barcode, False) + "\n      ", end="")
+            t_extraction[0].print_data(t_extraction[1])
             sep()
             return
         elif user_input == 3:  # Transactions -> View All
@@ -45,11 +38,7 @@ def main():
         elif user_input == 2:  # Refunds -> Search
             extraction = ff_prompt("Refunds -> Search", "ID", refundDB.extract_from_db)
             sep()
-            print("ID: " + extraction.t_id)
-            print("Reason: " + extraction.reason)
-            print("Items: ", end="")
-            for barcode in extraction.items:
-                print(barcode + "\n      ", end="")
+            extraction.print_data()
             sep()
             return
         elif user_input == 3:  # Refunds -> View All
@@ -63,12 +52,7 @@ def main():
         elif user_input == 2:  # Items -> Search
             extraction = ff_prompt("Items -> Search", "Barcode", itemDB.extract_from_db)
             sep()
-            print("Barcode: " + extraction.barcode)
-            print("Manufacturer: " + extraction.manufacturer)
-            print("Product: " + extraction.product)
-            print("Price: " + extraction.price)
-            print("Multiplier: " + extraction.multiplier)
-            print("Quantity: " + extraction.quantity)
+            extraction.print_data()
             sep()
             return
         elif user_input == 3:  # Items -> View All
@@ -82,11 +66,7 @@ def main():
         elif user_input == 2:  # Manufacturers -> Search
             extraction = ff_prompt("Manufacturers -> Search", "Name", manufacturerDB.extract_from_db_by_name)
             sep()
-            print("Name: " + extraction.name)
-            print("Code: " + extraction.code)
-            print("Items: ", end="")
-            for rule in extraction.rules:
-                print(rule + "\n      ", end="")
+            extraction.print_data()
             sep()
             return
         elif user_input == 3:  # Manufacturers -> View All

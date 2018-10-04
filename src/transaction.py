@@ -47,3 +47,17 @@ class Transaction:
         else:
             self.card_number = card_number
 
+    def print_data(self, t_id):
+        print("ID: " + t_id)
+        print("Payment Method: " + self.payment_method)
+        print("Card Number: " + self.card_number)
+        print("Rewards ID: " + str(self.rewards_id))
+        print("Cart: ", end="")
+        switch = False
+        for barcode in self.cart:
+            if switch is False:
+                switch = True
+            else:
+                print("\n      ", end="")
+            print(barcode, end="")
+        print()

@@ -38,3 +38,16 @@ class Manufacturer:
 
     def remove_all_rules(self):
         self.rules = []
+
+    def print_data(self):
+        print("Name: " + self.name)
+        print("Code: " + self.code)
+        print("Items: ", end="")
+        switch = False
+        for rule in self.rules:
+            if switch is False:
+                switch = True
+            else:
+                print("\n      ", end="")
+            print(rule, end="")
+        print()

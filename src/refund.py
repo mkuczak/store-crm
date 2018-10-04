@@ -32,3 +32,16 @@ class Refund:
             raise IndexError
         else:
             self.items.pop(number - 1)
+
+    def print_data(self):
+        print("ID: " + self.t_id)
+        print("Reason: " + self.reason)
+        print("Items: ", end="")
+        switch = False
+        for barcode in self.items:
+            if switch is False:
+                switch = True
+            else:
+                print("\n      ", end="")
+            print(barcode, end="")
+        print()

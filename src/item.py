@@ -25,3 +25,11 @@ class Item:
             barcode += str(n)
         barcode += check_digit
         self.barcode = barcode
+
+    def print_data(self):
+        print("Barcode: " + self.barcode)
+        print("Manufacturer: " + self.manufacturer)
+        print("Product: " + self.product)
+        print("Price: " + self.price)
+        print("Multiplier: " + self.multiplier)
+        print("Quantity: " + self.quantity)

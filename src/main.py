@@ -152,6 +152,7 @@ def item_search():
 
 
 def manufacturer_new():
+    sep()
     while True:
         print("Input manufacturer name")
         name = input("Name: ")

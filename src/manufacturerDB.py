@@ -18,7 +18,7 @@ def add_to_db(manufacturer):
 
 
 def extract_from_db_by_name(name):
-    row = cursor.execute("SELECT * FROM Manufacturers WHERE Name = ?", name).fetchone()
+    row = cursor.execute("SELECT * FROM Manufacturers WHERE Name = ?", (name,)).fetchone()
     if row is None:
         raise ValueError
     else:
@@ -26,7 +26,7 @@ def extract_from_db_by_name(name):
 
 
 def extract_from_db_by_code(code):
-    row = cursor.execute("SELECT * FROM Manufacturers WHERE Code = ?", code).fetchone()
+    row = cursor.execute("SELECT * FROM Manufacturers WHERE Code = ?", (code,)).fetchone()
     if row is None:
         raise ValueError
     else:
@@ -34,12 +34,12 @@ def extract_from_db_by_code(code):
 
 
 def remove_from_db_by_name(name):
-    cursor.execute("DELETE * FROM Manufacturers WHERE Name = ?", name)
+    cursor.execute("DELETE * FROM Manufacturers WHERE Name = ?", (name,))
     connector.commit()
 
 
 def remove_from_db_by_code(code):
-    cursor.execute("DELETE * FROM Manufacturers WHERE Code = ?", code)
+    cursor.execute("DELETE * FROM Manufacturers WHERE Code = ?", (code,))
     connector.commit()
 
 

@@ -54,6 +54,7 @@ def main():
         if user_input == 0:  # Main Menu
             return
         elif user_input == 1:  # Manufacturers -> New
+            manufacturer_new()
             pass
         elif user_input == 2:  # Manufacturers -> Search
             manufacturer_search()
@@ -151,7 +152,49 @@ def item_search():
 
 
 def manufacturer_new():
-    pass
+    while True:
+        print("Input manufacturer name")
+        name = input("Name: ")
+        copy = manufacturerDB.get_code_from_name(name)
+        if copy is None:
+            break
+        else:
+            sep()
+            print(name + " is being used by another manufacturer (code: " + copy + ")")
+    sep()
+    while True:
+        print("Input 5-digit code")
+        code = input("Code")
+        if code.isdigit() and len(code) == 5:
+            copy = manufacturerDB.get_name_from_code(code)
+            if copy is None:
+                break
+            else:
+                sep()
+                print(copy + " is already using the code " + code)
+        else:
+            sep()
+            print(code + " is an invalid 5-digit code")
+    rules = []
+    sep()
+    while True:
+        n = prompt.mc("Would you like to add product code rules to this manufacturer?", options, "Yes", "No",
+                      "Cancel manufacturer")
+        if n == 1:
+            my_rule = input("Rule " + str(len(rules) + 1) + ":")
+            rules.append(my_rule)
+            sep()
+            print("Current rules: ")
+            for rule in rules:
+                print(rule)
+        elif n == 2:
+            break
+        elif n == 3:
+            return
+        else:
+            sep()
+            print("Invalid input")
+    manufacturerDB.add_to_db(Manufacturer(name, code, rules))
 
 
 def manufacturer_search():

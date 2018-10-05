@@ -12,7 +12,8 @@ def navigate_menu(heading, *choices):
             if 0 <= int(decision) <= n:
                 return decision
         except ValueError:
-            print("ValueError: Try again.\n")
+            print("ValueError: Try again.")
+            print("------------------------------")
 
 
 # Multiple Choice Prompt: Options are listed and the user only needs to select an int from the list.
@@ -24,13 +25,16 @@ def mc(heading, func, *choices):
             print(str(n) + ': ' + choice)
             n += 1
         try:
-            decision = int(input("Input value: "))
-            func(decision)
-            break
+            decision = input("Input value: ")
+            if decision == "":
+                return None
+            return func(decision), int(decision)
         except ValueError:
-            print("ValueError: Try again.\n")
+            print("ValueError: Try again.")
+            print("------------------------------")
         except IndexError:
-            print("IndexError: Try again.\n")
+            print("IndexError: Try again.")
+            print("------------------------------")
 
 
 # Free Form Prompt: User must input something (such as a barcode) with the heading being the only guidance.
@@ -39,8 +43,12 @@ def ff(heading, keyword, func):
         print(heading)
         try:
             user_input = input("Input " + keyword + ": ")
+            if user_input == "":
+                return None
             return func(user_input), user_input
         except ValueError:
-            print("ValueError: Try again.\n")
+            print("ValueError: Try again.")
+            print("------------------------------")
         except AssertionError:
-            print("AssertionError: Try again.\n")
+            print("AssertionError: Try again.")
+            print("------------------------------")

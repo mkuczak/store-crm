@@ -1,3 +1,4 @@
+# Import itemDB.py and verify bar codes thrown into add_to_cart later.
 class Transaction:
 
     def __init__(self, cart=None, payment_method=None, card_number=None, rewards_id=None):
@@ -31,6 +32,15 @@ class Transaction:
             self.cart.pop(number - 1)
 
     def set_payment_method(self, payment_method):
+        if len(payment_method) == 1:
+            if payment_method == '1':
+                payment_method = "cash"
+            elif payment_method == '2':
+                payment_method = "credit"
+            elif payment_method == '3':
+                payment_method = "debit"
+            else:
+                raise  ValueError
         if (payment_method == "credit" or payment_method == "debit" or
                 payment_method == "cash" or payment_method == "check"):
             self.payment_method = payment_method
@@ -46,6 +56,12 @@ class Transaction:
             raise AssertionError
         else:
             self.card_number = card_number
+
+    def print_cart(self):
+        n = 1
+        for item in self.cart:
+            print(str(n) + ": " + item)
+            n += 1
 
     def print_data(self, t_id):
         print("ID: " + t_id)

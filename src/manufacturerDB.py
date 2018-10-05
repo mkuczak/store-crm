@@ -45,21 +45,21 @@ def remove_from_db_by_code(code):
 
 def get_name_from_code(code):
     try:
-        return cursor.execute("SELECT Name FROM Manufacturers WHERE Code = ?", code).fetchone()[0]
+        return cursor.execute("SELECT Name FROM Manufacturers WHERE Code = ?", (code,)).fetchone()[0]
     except TypeError:
         return None
 
 
 def get_code_from_name(name):
     try:
-        return cursor.execute("SELECT Code FROM Manufacturers WHERE Name = ?", name).fetchone()[0]
+        return cursor.execute("SELECT Code FROM Manufacturers WHERE Name = ?", (name,)).fetchone()[0]
     except TypeError:
         return None
 
 
 def get_rules_from_code(code):
     _rules = []
-    row = cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Code = ?", code)
+    row = cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Code = ?", (code,))
     if row is None:
         return None
     for i in range(2, 7):
@@ -73,7 +73,7 @@ def get_rules_from_code(code):
 
 def get_rules_from_name(name):
     _rules = []
-    row = cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Name = ?", name)
+    row = cursor.execute("SELECT Rule_1, Rule_2, Rule_3, Rule_4, Rule_5 FROM Manufacturers WHERE Name = ?", (name,))
     if row is None:
         return None
     for i in range(2, 7):

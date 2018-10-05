@@ -33,6 +33,7 @@ def main():
             return
         elif user_input == 1:  # Refunds -> New
             refund_new()
+            return
         elif user_input == 2:  # Refunds -> Search
             refund_search()
             return
@@ -44,6 +45,7 @@ def main():
             return
         elif user_input == 1:  # Items -> New
             item_new()
+            return
         elif user_input == 2:  # Items -> Search
             item_search()
             return
@@ -55,7 +57,7 @@ def main():
             return
         elif user_input == 1:  # Manufacturers -> New
             manufacturer_new()
-            pass
+            return
         elif user_input == 2:  # Manufacturers -> Search
             manufacturer_search()
             return
@@ -165,7 +167,7 @@ def manufacturer_new():
     sep()
     while True:
         print("Input 5-digit code")
-        code = input("Code")
+        code = input("Code: ")
         if code.isdigit() and len(code) == 5:
             copy = manufacturerDB.get_name_from_code(code)
             if copy is None:
@@ -180,7 +182,7 @@ def manufacturer_new():
     sep()
     while True:
         n = prompt.mc("Would you like to add product code rules to this manufacturer?", options, "Yes", "No",
-                      "Cancel manufacturer")
+                      "Cancel manufacturer")[1]
         if n == 1:
             my_rule = input("Rule " + str(len(rules) + 1) + ":")
             rules.append(my_rule)

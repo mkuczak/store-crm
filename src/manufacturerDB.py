@@ -22,7 +22,11 @@ def extract_from_db_by_name(name):
     if row is None:
         raise ValueError
     else:
-        return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
+        cart = []
+        for n in range(2, 6):
+            if row[n] != "":
+                cart.append(row[n])
+        return Manufacturer(row[0], row[1], cart)
 
 
 def extract_from_db_by_code(code):
@@ -30,7 +34,7 @@ def extract_from_db_by_code(code):
     if row is None:
         raise ValueError
     else:
-        return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6], row[7]])
+        return Manufacturer(row[0], row[1], [row[2], row[3], row[4], row[5], row[6]])
 
 
 def remove_from_db_by_name(name):

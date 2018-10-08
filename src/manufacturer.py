@@ -48,6 +48,6 @@ class Manufacturer:
             if switch is False:
                 switch = True
             else:
-                print("\n      ", end="")
+                print("\n       ", end="")
             print(rule, end="")
         print()

@@ -184,7 +184,7 @@ def manufacturer_new():
         n = prompt.mc("Would you like to add product code rules to this manufacturer?", options, "Yes", "No",
                       "Cancel manufacturer")[1]
         if n == 1:
-            my_rule = input("Rule " + str(len(rules) + 1) + ":")
+            my_rule = input("Rule " + str(len(rules) + 1) + ": ")
             rules.append(my_rule)
             sep()
             print("Current rules: ")
@@ -198,10 +198,12 @@ def manufacturer_new():
             sep()
             print("Invalid input")
     manufacturerDB.add_to_db(Manufacturer(name, code, rules))
+    print(name + " successfully added to the manufacturer database.")
+    sep()
 
 
 def manufacturer_search():
-    extraction = prompt.ff("Manufacturers -> Search", "Name", manufacturerDB.extract_from_db_by_name)
+    extraction = prompt.ff("Manufacturers -> Search", "Name", manufacturerDB.extract_from_db_by_name)[0]
     sep()
     extraction.print_data()
     sep()

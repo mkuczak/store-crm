@@ -59,7 +59,14 @@ def main():
             manufacturer_new()
             return
         elif user_input == 2:  # Manufacturers -> Search
-            manufacturer_search()
+            sep()
+            user_input = prompt.navigate_menu("Search Manufacturers", "By Name", "By Code")
+            if user_input == 0:  # Main Menu
+                return
+            elif user_input == 1:
+                manufacturer_search(False)
+            elif user_input == 2:
+                manufacturer_search(True)
             return
         elif user_input == 3:  # Manufacturers -> View All
             pass
@@ -202,8 +209,11 @@ def manufacturer_new():
     sep()
 
 
-def manufacturer_search():
-    extraction = prompt.ff("Manufacturers -> Search", "Name", manufacturerDB.extract_from_db_by_name)[0]
+def manufacturer_search(code):
+    if code is False:
+        extraction = prompt.ff("Manufacturers -> Search", "Name", manufacturerDB.extract_from_db_by_name)[0]
+    else:
+        extraction = prompt.ff("Manufacturers -> Search", "Code", manufacturerDB.extract_from_db_by_code)[0]
     sep()
     extraction.print_data()
     sep()

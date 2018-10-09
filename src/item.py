@@ -1,3 +1,6 @@
+import src.itemDB as itemDB
+
+
 class Item:
 
     def __init__(self, manufacturer, product, price, multiplier, quantity, barcode=None):
@@ -24,7 +27,10 @@ class Item:
         for n in b:
             barcode += str(n)
         barcode += check_digit
-        self.barcode = barcode
+        if itemDB.get_name(barcode) is None:
+            self.barcode = barcode
+        else:
+            raise ValueError
 
     def print_data(self):
         print("Barcode: " + self.barcode)

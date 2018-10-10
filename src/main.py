@@ -78,32 +78,32 @@ def main():
 def transaction_new():
     _transaction = Transaction()
     while True:
-        if prompt.ff("Scan items, or press enter to continue", "Barcode", _transaction.add_to_cart) is None:
-            sep()
-            n = prompt.mc("Options", options, "Continue", "Add items", "Remove items", "Cancel transaction")[1]
-            sep()
-            if n == 1:
-                if len(_transaction.cart) > 0:
-                    break
+        while True:
+            if prompt.ff("Scan items, or press enter to continue", "Barcode", _transaction.add_to_cart) is None:
+                sep()
+                n = prompt.mc("Options", options, "Continue", "Add items", "Remove items", "Cancel transaction")[1]
+                sep()
+                if n == 1:
+                    if len(_transaction.cart) > 0:
+                        break
+                    else:
+                        print("Error: No items in cart")
+                elif n == 2:
+                    continue
+                elif n == 3:
+                    if len(_transaction.cart) > 0:
+                        _transaction.print_cart()
+                        prompt.mc("Select item to remove", _transaction.remove_from_cart)
+                    else:
+                        print("Error: No items in cart")
+                elif n == 4:
+                    return
                 else:
-                    print("Error: No items in cart")
-            elif n == 2:
-                continue
-            elif n == 3:
-                if len(_transaction.cart) > 0:
-                    _transaction.print_cart()
-                    prompt.mc("Select item to remove", _transaction.remove_from_cart)
-                else:
-                    print("Error: No items in cart")
-            elif n == 4:
-                return
-            else:
-                print("Invalid input.")
-        sep()
-        print("Items scanned so far:")
-        for _item in _transaction.cart:
-            print(_item)
-        n = 0
+                    print("Invalid input.")
+            sep()
+            print("Items scanned so far:")
+            for _item in _transaction.cart:
+                print(_item)
         while True:
             if prompt.mc("Select payment type", _transaction.set_payment_method, "cash", "credit", "debit") \
                     is None:
@@ -114,11 +114,14 @@ def transaction_new():
                     break
                 elif n == 3:
                     return
+            break
         if n == 2:
             continue
         while True:
             if _transaction.payment_method != "cash":
-                if prompt.ff("Input card number", "Card Number: ", _transaction.set_card_number) is None:
+                sep()
+                if prompt.ff(_transaction.payment_method[0].upper() + _transaction.payment_method[1:] + " selected",
+                             "Card Number", _transaction.set_card_number) is None:
                     n = prompt.mc("Options", options, "Input card number", "Edit cart", "Cancel transaction")[1]
                     if n == 1:
                         continue
@@ -126,9 +129,14 @@ def transaction_new():
                         break
                     elif n == 3:
                         return
+                break
         if n == 2:
             continue
+
+        print("Transaction added")
         # THIS IS WHERE THE RECEIPT IS PRINTED AND TRANSACTION ADDED TO DB, if you can get here.
+        break
+    sep()
 
 
 def transaction_search():

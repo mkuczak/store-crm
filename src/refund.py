@@ -33,6 +33,12 @@ class Refund:
         else:
             self.items.pop(number - 1)
 
+    def print_items(self):
+        n = 1
+        for item in self.items:
+            print(str(n) + ": " + item)
+            n += 1
+
     def print_data(self):
         print("ID: " + self.t_id)
         print("Reason: " + self.reason)

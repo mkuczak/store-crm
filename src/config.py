@@ -33,7 +33,6 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS Transactions
 cursor.execute("""CREATE TABLE IF NOT EXISTS Refunds
                                             (ID int,
                                             Reason text,
-                                            Total real,
                                             """ + _cart_string.replace("Cart", "Item"))
 
 cursor.execute("""CREATE TABLE IF NOT EXISTS Items

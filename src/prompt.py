@@ -38,14 +38,17 @@ def mc(heading, func, *choices):
 
 
 # Free Form Prompt: User must input something (such as a barcode) with the heading being the only guidance.
-def ff(heading, keyword, func):
+def ff(heading, keyword, func, extra_input=None):
     while True:
         print(heading)
         try:
             user_input = input("Input " + keyword + ": ")
             if user_input == "":
                 return None
-            return func(user_input), user_input
+            if extra_input is None:
+                return func(user_input), user_input
+            else:
+                return func(user_input, extra_input), user_input
         except ValueError:
             print("ValueError: Try again.")
             print("------------------------------")

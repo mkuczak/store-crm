@@ -42,28 +42,28 @@ def add_to_db(transaction):
 
 def get_payment_method(tid):
     try:
-        return cursor.execute("SELECT Payment_Method FROM Transactions WHERE ID = ?", str(tid)).fetchone()[0]
+        return cursor.execute("SELECT Payment_Method FROM Transactions WHERE ID = ?", (str(tid),)).fetchone()[0]
     except TypeError:
         return None
 
 
 def get_card_number(tid):
     try:
-        return cursor.execute("SELECT Card_Number FROM Transactions WHERE ID = ?", str(tid)).fetchone()[0]
+        return cursor.execute("SELECT Card_Number FROM Transactions WHERE ID = ?", (str(tid),)).fetchone()[0]
     except TypeError:
         return None
 
 
 def get_rewards_id(tid):
     try:
-        return cursor.execute("SELECT Rewards_ID FROM Transactions WHERE ID = ?", str(tid)).fetchone()[0]
+        return cursor.execute("SELECT Rewards_ID FROM Transactions WHERE ID = ?", (str(tid),)).fetchone()[0]
     except TypeError:
         return None
 
 
 def get_cart(tid):
     cart = []
-    row = cursor.execute("SELECT * FROM Transactions WHERE ID = ?", str(tid)).fetchone()
+    row = cursor.execute("SELECT * FROM Transactions WHERE ID = ?", (str(tid),)).fetchone()
     if row is None:
         return None
     for i in range(4, 54):
@@ -76,14 +76,19 @@ def get_cart(tid):
 
 
 def extract_from_db(tid):
-    if cursor.execute("SELECT * FROM Transactions WHERE ID = ?", str(tid)).fetchone() is None:
+    if type(tid) is str:
+        tid = int(tid)
+    try:
+        if cursor.execute("SELECT * FROM Transactions WHERE ID = ?", (str(tid),)).fetchone() is None:
+            raise ValueError
+        else:
+            return Transaction(get_cart(tid), get_payment_method(tid), get_card_number(tid), get_rewards_id(tid))
+    except sqlite3.ProgrammingError:
         raise ValueError
-    else:
-        return Transaction(get_cart(tid), get_payment_method(tid), get_card_number(tid), get_rewards_id(tid))
 
 
 def remove_from_db(tid):
-    if cursor.execute("SELECT * FROM Transactions WHERE ID = ?", str(tid)).fetchone() is None:
+    if cursor.execute("SELECT * FROM Transactions WHERE ID = ?", (str(tid),)).fetchone() is None:
         raise ValueError
-    cursor.execute("DELETE FROM Transactions WHERE ID=?", str(tid))
+    cursor.execute("DELETE FROM Transactions WHERE ID=?", (str(tid),))
     connector.commit()

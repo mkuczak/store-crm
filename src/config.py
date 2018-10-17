@@ -14,7 +14,7 @@ can_resell = False
 
 
 global connector
-connector = sqlite3.connect('location.db')
+connector = sqlite3.connect(city + ".db")
 connector.text_factory = str
 global cursor
 cursor = connector.cursor()

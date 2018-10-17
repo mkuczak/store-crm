@@ -1,5 +1,4 @@
 from src.config import *
-from src.item import *
 
 
 def add_to_db(item):
@@ -96,7 +95,8 @@ def extract_from_db(barcode):
     if cursor.execute("SELECT * FROM Items WHERE Barcode = ?", (barcode,)).fetchone() is None:
         raise ValueError
     row = cursor.execute("SELECT * FROM Items WHERE Barcode=?", (barcode,)).fetchone()
-    return Item(row[1], row[2], row[3], row[4], row[5], row[0])
+    return [row[1], row[2], row[3], row[4], row[5], row[0]]
+    # Note: This doesn't return an item like the other extracts in order to avoid two-way dependency
 
 
 def remove_from_db(barcode):

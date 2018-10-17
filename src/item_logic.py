@@ -16,7 +16,9 @@ def new():
         sep()
         if n == 1:
             m_info = prompt.ff("Manufacturer by name", "Name", manufacturerDB.get_code_from_name)
-            if m_info is None:
+            if m_info[0] is None:
+                sep()
+                print("Manufacturer does not exists.")
                 continue
             else:
                 m_code = m_info[0]
@@ -24,7 +26,9 @@ def new():
                 break
         elif n == 2:
             m_info = prompt.ff("Manufacturer by code", "Code", manufacturerDB.get_name_from_code)
-            if m_info is None:
+            if m_info[0] is None:
+                sep()
+                print("Manufacturer does not exists.")
                 continue
             else:
                 m_name = m_info[0]
@@ -35,6 +39,7 @@ def new():
     while True:
         sep()
         n = prompt.mc("Input the price of the item", options, "Input price", "Skip", "Cancel item")[1]
+        sep()
         if n == 1:
             try:
                 price = input("Price: ")
@@ -124,11 +129,116 @@ def new():
             return
 
     itemDB.add_to_db(item)
+    sep()
     print(name + " successfully added to the item database.")
+    print("Barcode given: " + item.barcode)
+    sep()
 
 
 def search():
+    sep()
     extraction = prompt.ff("Items -> Search", "Barcode", itemDB.extract_from_db)
-    sep()
-    extraction.print_data()
-    sep()
+    if extraction is not None:
+        item = Item(extraction[0][0], extraction[0][1], extraction[0][2],
+                    extraction[0][3], extraction[0][4], extraction[0][5])
+        barcode = extraction[1]
+        while True:
+            sep()
+            item.print_data()
+            sep()
+            try:
+                n = prompt.mc("Edit item values?", options, "Return to main menu", "Quantity", "Price", "Discount")[1]
+                sep()
+                if n == 1:
+                    sep()
+                    return
+                elif n == 2:
+                    try:
+                        n = prompt.mc("Edit item quantity options", options, "Return to main menu", "Set total",
+                                      "Add to total", "Subtract from total")[1]
+                    except ValueError:
+                        sep()
+                        print("Returning to main menu.")
+                        sep()
+                        return
+                    sep()
+                    if n == 1:
+                        return
+                    elif n == 2:
+                        try:
+                            ans = prompt.ff("Set total number of " + item.product + " in stock", "Total", options)[1]
+                        except ValueError:
+                            sep()
+                            print("Returning to main menu.")
+                            sep()
+                            return
+                        sep()
+                        if ans is None:
+                            sep()
+                            print("Operation cancelled.")
+                        else:
+                            try:
+                                item.quantity = int(ans)
+                                itemDB.set_quantity(barcode, item.quantity)
+                                print("Quantity successfully adjusted.")
+                            except ValueError:
+                                sep()
+                                print("Invalid input.")
+                        continue
+                    elif n == 3:
+                        try:
+                            ans = prompt.ff("Adding to current value of " + str(item.quantity), "Value", options)[1]
+                        except ValueError:
+                            sep()
+                            print("Returning to main menu.")
+                            sep()
+                            return
+                        sep()
+                        if ans is None:
+                            sep()
+                            print("Operation cancelled.")
+                        else:
+                            try:
+                                item.quantity = item.quantity + int(ans)
+                                itemDB.add_quantity(barcode, item.quantity)
+                                print("Quantity successfully adjusted.")
+                            except ValueError:
+                                sep()
+                                print("Invalid input.")
+                        continue
+                    elif n == 4:
+                        try:
+                            ans = prompt.ff("Subtracting from current value of " + str(item.quantity), "Value",
+                                            options)[1]
+                        except ValueError:
+                            sep()
+                            print("Returning to main menu.")
+                            sep()
+                            return
+                        sep()
+                        if ans is None:
+                            sep()
+                            print("Operation cancelled.")
+                        else:
+                            try:
+                                item.quantity = item.quantity - int(ans)
+                                itemDB.subtract_quantity(barcode, int(ans))
+                                print("Quantity successfully adjusted.")
+                            except ValueError:
+                                sep()
+                                print("Invalid input.")
+                elif n == 3:
+                    print("Price") # INCOMPLETE
+                elif n == 4:
+                    print("Discount") # INCOMPLETE
+
+                continue
+            except ValueError:
+                sep()
+                print("Invalid input. Returning to main menu.")
+                sep()
+                return
+    else:
+        sep()
+        print("Item not found in database.")
+        sep()

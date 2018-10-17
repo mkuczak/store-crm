@@ -42,7 +42,8 @@ def new():
             sep()
             print("Current rules: ")
             for rule in rules:
-                print(rule)
+                print("- " + rule)
+            sep()
         elif n == 2:
             break
         elif n == 3:
@@ -51,6 +52,7 @@ def new():
         else:
             sep()
             print("Invalid input")
+    sep()
     manufacturerDB.add_to_db(Manufacturer(name, code, rules))
     print(name + " successfully added to the manufacturer database.")
     sep()
@@ -64,3 +66,4 @@ def search(code):
     sep()
     extraction.print_data()
     sep()
+    # Add edit features, create a way out, and prevent it from breaking when blank input is given

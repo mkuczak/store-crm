@@ -60,6 +60,7 @@ def new():
         sep()
         n = prompt.mc("Determine the rewards benefits of the item", options,
                       "No discount", "Input percent discount", "Input modified price", "Cancel item")[1]
+        sep()
         if n == 1:
             multiplier = float(1.00)
             break
@@ -156,9 +157,14 @@ def search():
                     try:
                         n = prompt.mc("Edit item quantity options", options, "Return to main menu", "Set total",
                                       "Add to total", "Subtract from total")[1]
+                    except TypeError:
+                        sep()
+                        print("Not a valid price. Returning to main menu.")
+                        sep()
+                        return
                     except ValueError:
                         sep()
-                        print("Returning to main menu.")
+                        print("Not a valid price. Returning to main menu.")
                         sep()
                         return
                     sep()
@@ -167,9 +173,14 @@ def search():
                     elif n == 2:
                         try:
                             ans = prompt.ff("Set total number of " + item.product + " in stock", "Total", options)[1]
+                        except TypeError:
+                            sep()
+                            print("Not a valid price. Returning to main menu.")
+                            sep()
+                            return
                         except ValueError:
                             sep()
-                            print("Returning to main menu.")
+                            print("Not a valid price. Returning to main menu.")
                             sep()
                             return
                         sep()
@@ -188,9 +199,14 @@ def search():
                     elif n == 3:
                         try:
                             ans = prompt.ff("Adding to current value of " + str(item.quantity), "Value", options)[1]
+                        except TypeError:
+                            sep()
+                            print("Not a valid price. Returning to main menu.")
+                            sep()
+                            return
                         except ValueError:
                             sep()
-                            print("Returning to main menu.")
+                            print("Not a valid price. Returning to main menu.")
                             sep()
                             return
                         sep()
@@ -210,9 +226,14 @@ def search():
                         try:
                             ans = prompt.ff("Subtracting from current value of " + str(item.quantity), "Value",
                                             options)[1]
+                        except TypeError:
+                            sep()
+                            print("Not a valid price. Returning to main menu.")
+                            sep()
+                            return
                         except ValueError:
                             sep()
-                            print("Returning to main menu.")
+                            print("Not a valid price. Returning to main menu.")
                             sep()
                             return
                         sep()
@@ -228,10 +249,75 @@ def search():
                                 sep()
                                 print("Invalid input.")
                 elif n == 3:
-                    print("Price") # INCOMPLETE
+                    try:
+                        n = prompt.ff("Edit item price (current: " + str(item.price) + ")", "Price", options)[1]
+                        n = float(n)
+                        item.price = n
+                        itemDB.set_price(barcode, item.price)
+                        sep()
+                        print("Price successfully adjusted.")
+                    except TypeError:
+                        sep()
+                        print("Not a valid price. Returning to main menu.")
+                        sep()
+                        return
+                    except ValueError:
+                        sep()
+                        print("Not a valid price. Returning to main menu.")
+                        sep()
+                        return
                 elif n == 4:
-                    print("Discount") # INCOMPLETE
-
+                    try:
+                        n = prompt.mc("Edit item discount options", options, "Return to main menu", "Set percent off",
+                                      "set multiplier")[1]
+                        sep()
+                        if n == 1:
+                            return
+                        elif n == 2:
+                            try:
+                                ans = prompt.ff("Set percent off", "Percent", options)[1]
+                            except ValueError or TypeError:
+                                sep()
+                                print("Returning to main menu.")
+                                sep()
+                                return
+                            sep()
+                            if ans is None:
+                                sep()
+                                print("Operation cancelled.")
+                            else:
+                                try:
+                                    item.multiplier = 100.00 - float(ans)
+                                    itemDB.set_quantity(barcode, item.multiplier)
+                                    print("Percent off successfully adjusted.")
+                                except ValueError:
+                                    sep()
+                                    print("Invalid input.")
+                        elif n == 3:
+                            try:
+                                ans = prompt.ff("Set multiplier", "Multiplier", options)[1]
+                            except ValueError or TypeError:
+                                sep()
+                                print("Returning to main menu.")
+                                sep()
+                                return
+                            sep()
+                            if ans is None:
+                                sep()
+                                print("Operation cancelled.")
+                            else:
+                                try:
+                                    item.multiplier = float(ans)
+                                    itemDB.set_quantity(barcode, item.multiplier)
+                                    print("Multiplier successfully adjusted.")
+                                except ValueError:
+                                    sep()
+                                    print("Invalid input.")
+                    except ValueError:
+                        sep()
+                        print("Returning to main menu.")
+                        sep()
+                        return
                 continue
             except ValueError:
                 sep()

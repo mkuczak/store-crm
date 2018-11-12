@@ -1,7 +1,7 @@
-from src.item import Item
+from src.item.item import Item
 
-import src.itemDB as itemDB
-import src.manufacturerDB as manufacturerDB
+import src.item.itemDB as itemDB
+import src.manufacturer.manufacturerDB as manufacturerDB
 
 from src.prompt import sep, options
 import src.prompt as prompt

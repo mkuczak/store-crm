@@ -1,5 +1,5 @@
 import unittest
-from src.item import Item
+from src.item.item import Item
 # NOTE: Test methods need to start with "test_" or else they won't be recognized.
 # __init__(barcode, manufacturer, product, price, multiplier, quantity, barcode=None)
 

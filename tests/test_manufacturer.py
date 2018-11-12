@@ -1,5 +1,5 @@
 import unittest
-from src.manufacturer import Manufacturer
+from src.manufacturer.manufacturer import Manufacturer
 # NOTE: Test methods need to start with "test_" or else they won't be recognized.
 # __init__(name, code, rules)
 

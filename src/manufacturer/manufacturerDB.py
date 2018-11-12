@@ -1,5 +1,5 @@
 from src.config import *
-from src.manufacturer import *
+from src.manufacturer.manufacturer import *
 
 
 def add_to_db(manufacturer):

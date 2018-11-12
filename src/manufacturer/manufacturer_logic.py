@@ -1,6 +1,6 @@
-from src.manufacturer import Manufacturer
+from src.manufacturer.manufacturer import Manufacturer
 
-import src.manufacturerDB as manufacturerDB
+import src.manufacturer.manufacturerDB as manufacturerDB
 
 from src.prompt import sep, options
 import src.prompt as prompt

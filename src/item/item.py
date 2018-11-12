@@ -1,4 +1,4 @@
-import src.itemDB as itemDB
+import src.item.itemDB as itemDB
 
 
 class Item:

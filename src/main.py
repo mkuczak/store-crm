@@ -1,7 +1,7 @@
-from src.transaction_logic import new as transaction_new, search as transaction_search
-from src.refund_logic import new as refund_new, search as refund_search
-from src.item_logic import new as item_new, search as item_search
-from src.manufacturer_logic import new as manufacturer_new, search as manufacturer_search
+from src.transaction.transaction_logic import new as transaction_new, search as transaction_search
+from src.refund.refund_logic import new as refund_new, search as refund_search
+from src.item.item_logic import new as item_new, search as item_search
+from src.manufacturer.manufacturer_logic import new as manufacturer_new, search as manufacturer_search
 
 from src.prompt import sep
 import src.prompt as prompt

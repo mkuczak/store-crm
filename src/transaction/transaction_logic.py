@@ -1,6 +1,6 @@
-from src.transaction import Transaction
+from src.transaction.transaction import Transaction
 
-import src.transactionDB as transactionDB
+import src.transaction.transactionDB as transactionDB
 
 from src.prompt import sep, options
 import src.prompt as prompt

@@ -1,5 +1,5 @@
 from src.config import *
-from src.transaction import *
+from src.transaction.transaction import *
 
 
 def get_next_id():

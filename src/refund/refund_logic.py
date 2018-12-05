@@ -1,8 +1,7 @@
-from src.transaction import Transaction  # Try removing this and see if it breaks
-from src.refund import Refund
+from src.refund.refund import Refund
 
-import src.transactionDB as transactionDB
-import src.refundDB as refundDB
+import src.transaction.transactionDB as transactionDB
+import src.refund.refundDB as refundDB
 
 from src.prompt import sep, options
 import src.prompt as prompt

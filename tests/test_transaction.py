@@ -1,5 +1,5 @@
 import unittest
-from src.transaction import Transaction
+from src.transaction.transaction import Transaction
 # NOTE: Test methods need to start with "test_" or else they won't be recognized.
 # __init__(id, cart=None, payment_method=None, card_number=None, rewards_id=None)
 
